@@ -9,6 +9,7 @@ $( document ).ajaxStart(function(){
     loaderdisplay++;
 });
 $( document ).ajaxStop(function(){
+  $('[data-toggle="tooltip"]').tooltip({container: "body"});
   loaderdisplay--;
   console.log("req received");
   if(!loaderdisplay)$("#ajaxloader").css("display","none");
@@ -528,7 +529,7 @@ function viewStudentGalleryImages(x){
     $("#imagegalleryinfo").html("<h5 class=\"text-inactive text-center\">Make sure you have selected a gallery</h5>");
   }
 
-  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip({container: "body"});
 }
 function viewStudentGallery(){
     var htmlString="";
@@ -552,9 +553,9 @@ function viewStudentGallery(){
               htmlString+=" data-"+defs[j]+"="+data[i][defs[j]];
           }
           if(Number(data[i].visible))
-          htmlString+=" class=\"studentgallery-controls\"><i style=\"display:none\"  data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Unhide Gallery\" class=\"glyphicon glyphicon-eye-open\"></i><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Hide Gallery\" class=\"glyphicon glyphicon-eye-close\"></i><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Delete Gallery\" class=\"glyphicon glyphicon-trash\"></i></div>";
+          htmlString+=" class=\"studentgallery-controls\"><div class=\"file_button_container\"><input type=\"file\" multiple /></div><i style=\"display:none\"  data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Unhide Gallery\" class=\"glyphicon glyphicon-eye-open\"></i><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Hide Gallery\" class=\"glyphicon glyphicon-eye-close\"></i><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Delete Gallery\" class=\"glyphicon glyphicon-trash\"></i></div>";
           else
-          htmlString+=" class=\"studentgallery-controls\"><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Unhide Gallery\" class=\"glyphicon glyphicon-eye-open\"></i><i style=\"display:none\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Hide Gallery\" class=\"glyphicon glyphicon-eye-close\"></i><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Delete Gallery\" class=\"glyphicon glyphicon-trash\"></i></div>";
+          htmlString+=" class=\"studentgallery-controls\"><div class=\"file_button_container\"><input type=\"file\" multiple /></div><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Unhide Gallery\" class=\"glyphicon glyphicon-eye-open\"></i><i style=\"display:none\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Hide Gallery\" class=\"glyphicon glyphicon-eye-close\"></i><i data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Delete Gallery\" class=\"glyphicon glyphicon-trash\"></i></div>";
           htmlString+="</div></div>";
         }
         $("#studentgallerygrid").html(htmlString);
@@ -562,7 +563,24 @@ function viewStudentGallery(){
       else {
         $("#studentgallerygrid").html("<h4 style=\"color:#CCC\">Make sure you Have created a gallery</h4>");
       }
-
+      $(".studentgallery-controls .file_button_container input").change(function(e){
+        var id=$(this).parent().parent().attr("data-id");
+        var file=$(this).prop("files");
+        for(var i=0;i<file.length;i++){
+          if(file[i].size<maxfilesize&&file[i].type.indexOf("image")>=0){
+            var formdata=new FormData();
+            formdata.append("file",file[i]);
+            formdata.append("path","../data/studentgallery/");
+            addprogressbar("#studentgalleryupload-meta",file[i].name,"progressbar"+progressid,true);
+            fileupload(formdata,"progressbar"+progressid++,"upload_to_studentgallery.php?id="+id,"studentgalleryupload-warnings","viewStudentGalleryImages","#studentgallery"+id);
+          }
+          else if(file[i].size>=maxfilesize){
+            $("#studentgalleryupload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" exceeds max upload size of "+mbsize+"MB<p>");
+          }else if(file[i].type.indexOf("image")<0){
+            $("#studentgalleryupload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" is not an Image<p>");
+          }
+        }
+      });
       $(".imageGrid").click(function(){
         $("#imagegalleryinfo").attr("data-id",$(this).attr("id").substring(14));
         viewStudentGalleryImages("#"+$(this).attr("id"));
@@ -634,7 +652,7 @@ function viewStudentGallery(){
 
     });
 
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({container: "body"});
 }
 $("#createstudentgallerysubmit").click(function(){
     var name=urlfriendly($("#createstudentgalleryname").val());
@@ -717,7 +735,7 @@ $(document).ready(function(){
   viewntsPeople();
   viewStudentGallery();
   viewStudentGalleryImages();
-  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip({container: "body"});
   $("#studentgallerydeleterbutton").click(function(){
     var id=$(this).attr("data-id");
     $.getJSON("./deletestudentgallery.php?id="+id,function(data){

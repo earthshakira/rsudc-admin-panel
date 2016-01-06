@@ -361,3 +361,33 @@ border:1px solid red;
 	top:10px;
 	display: none;
 }
+
+.file_button_container,.file_button_container input {
+       height: 30px;
+       width: 30px;
+			 cursor: pointer;
+   }
+.file_button_container{
+	position:absolute;
+	background-image: url("./././def/uploadico.png");
+	background-position: center;
+	background-size: cover;
+}
+.file_button_container:hover{
+	background-image: url("./././def/uploadicohover.png");
+}
+.file_button_container input {
+			margin-top: 0px;
+      opacity: 0;
+			position: absolute;
+			top:-20px;
+			z-index: 100;
+}
+.file_button_container .glyphicon{
+	position: absolute;z-index: 50;
+}
+#studentgalleryupload-meta{
+	position:absolute;
+	width:20%;
+	z-index: 100;
+}
