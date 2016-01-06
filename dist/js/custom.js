@@ -810,33 +810,23 @@ $(document).ready(function(){
         dropzone.ondragleave=function(){return false;}
       }
   });
-//Drag and Drop controllers
-addliveimgupdate("facultyinfomodalfileuploader","facultyinfomodalthumbnail");
+//Drag and Drop controller
 
-var dropzone=document.getElementById('facultyinfomodaluploader');
-dropzone.ondrop=function(e){
-  e.preventDefault();
-      // var file=e.dataTransfer.files;
-      // if(file[i].size<maxfilesize&&file[i].type.indexOf("image")>=0){
-      // var formdata=new FormData();
-      // formdata.append("file",file[i]);
-      // formdata.append("path","../data/frontcarousel/");
-      // addprogressbar("#upload-meta",file[i].name,"progressbar"+progressid,true);
-      // fileupload(formdata,"progressbar"+progressid++,"upload_to_gallery.php","upload-warnings","viewGallery",null);
-  //   }
-  //   else if(file[i].size>=maxfilesize){
-  //
-  //   }else if(file[i].type.indexOf("image")<0){
-  //
-  //   }
-  // }
-}
-dropzone.ondragover=function(){
-  $('.frontcarouseldragdropupload').css("display","block");
-  return false;
-}
-dropzone.ondragleave=function(){
-  $('.frontcarouseldragdropupload').css("display","none");
-  return false;
-}
+$(".peopleGridDefault").click(function(){
+  $('#facultyinfomodal').modal()
+});
+
+$("#facultyinfomodalsubmit").click(function(){
+  var name=$('#facultyinfomodalname').val();
+  var designation=$('#facultyinfomodaldesignation').val();
+  var desc=$('#facultyinfomodaldescription').val();
+  var file=$("#facultyinfomodalfileuploader").prop("files");
+  var type=$("[name='facutlytyperadio']:checked").attr("data-value");
+  if(name&&file.length&&designation&&desc&&type){
+    alert("yolo|"+type);
+  }else {
+    $("#facultyinfomodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Please Fill All Data <p>");
+  }
+})
+addliveimgupdate("facultyinfomodalfileuploader","facultyinfomodalthumbnail");
 });

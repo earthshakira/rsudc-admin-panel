@@ -150,18 +150,18 @@
                 <div class="col-sm-6">
                   <input type="text" class="form-control" id='facultyinfomodalname' placeholder="Name"/>
                   <br>
-                  <input type="text" class="form-control" id='facultyinfomodalname' placeholder="Designation"/>
+                  <input type="text" class="form-control" id='facultyinfomodaldesignation' placeholder="Designation"/>
                   <br>
-                  <textarea  maxlength="5000"class="form-control" id="facultyinfomodaldescription" placeholder="Information"></textarea>
+                  <textarea  maxlength="5000"class="form-control" id="facultyinfomodaldescription" placeholder="Description"></textarea>
                   <br>
                   <div class="input-group">
                     <div class="radio">
-                      <label class="radio-inline"><input type="radio" name="optradio">Core Faculty</label>
-                      <label class="radio-inline"><input type="radio" name="optradio">Visiting Faculty</label>
+                      <label class="radio-inline"><input type="radio" name="facutlytyperadio" data-value="core">Core Faculty</label>
+                      <label class="radio-inline"><input type="radio" name="facutlytyperadio" data-value="visiting">Visiting Faculty</label>
                     </div>
                   </div>
                   <br>
-                  <input class="btn btn-primary" id="facultyinfomodalfileuploader" type="file" id="facultyinfomodalimage"/>
+                  <input class="btn btn-primary" id="facultyinfomodalfileuploader" type="file"/>
                   <div id="facultyinfomodalprogress">
                   </div>
                   <div id="facultyinfomodalwarnings"></div>
@@ -169,7 +169,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" id="carouselmodalsubmit" class="btn btn-success">Save Changes</button>
+              <button type="button" id="facultyinfomodalsubmit" class="btn btn-success">Save Changes</button>
             </div>
           </div>
         </div>
