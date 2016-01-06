@@ -353,3 +353,11 @@ border:1px solid red;
 .imageGrid img{
 	transition: all 0.5s ease;
 }
+
+
+#ajaxloader{
+	position: fixed;
+	right:10px;
+	top:10px;
+	display: none;
+}

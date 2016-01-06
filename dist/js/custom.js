@@ -3,6 +3,16 @@ var warningtext=0;
 var maxfilesize=524288000;
 var mbsize=maxfilesize/1024/1024;
 var uploaddebug=false;
+var loaderdisplay=0;
+$( document ).ajaxStart(function(){
+  if(!loaderdisplay)$("#ajaxloader").css("display","block");
+    loaderdisplay++;
+});
+$( document ).ajaxStop(function(){
+  loaderdisplay--;
+  console.log("req received");
+  if(!loaderdisplay)$("#ajaxloader").css("display","none");
+});
 function urlfriendly(x){
   while(x.indexOf(" ")>-1)
   {
@@ -448,6 +458,35 @@ function viewStudentGalleryImages(x){
             });
           });
 
+          $(".imagegallery-controls .glyphicon-remove").click(function(){
+            if($(this).parent().children(".delete-confirm").css("display")=="block"){
+              $(this).parent().children(".delete-confirm").slideUp();
+            }
+            else{
+              $(this).parent().children(".delete-confirm").slideDown();
+            }
+          });
+
+          $(".imagegallery-controls .delete-confirm .btn-primary").click(function(){
+            $(this).parent(".delete-confirm").slideUp();
+          });
+          $(".imagegallery-controls .delete-confirm .btn-danger").click(function(){
+              var id=($(this).parent().parent().attr("id").substring(13));
+              var x=$(this).parent().parent().parent().parent();
+              $.getJSON("./deletestudentsgalleryimage.php?id="+id,function(data){
+                    if(data.status)
+                    {
+                      x.hide(500);
+                      setTimeout(function(){
+                        viewStudentGalleryImages("111111111111111"+$("#imagegalleryinfo").attr("data-id"));
+                      },500);
+                    }
+                    else{
+                      x.css("background-color","#e74c3c");
+                      x.css("opacity","0.4");
+                    }
+              });
+          });
           $(".imagegallery-controls .glyphicon-pencil").click(function(){
             var id=$(this).parent().attr("id").substring(13);
             $(this).css("display","none");
@@ -471,7 +510,7 @@ function viewStudentGalleryImages(x){
                   url+="&caption="+urlfriendly($("#imagecontrolstext"+id).val());
                   $.getJSON(url,function(data){
                     if(!data.status){
-                      alert("system is malfunctioning|data.message");
+                      alert("system is malfunctioning|"+data.message);
                     }
                   });
             }
@@ -525,6 +564,7 @@ function viewStudentGallery(){
       }
 
       $(".imageGrid").click(function(){
+        $("#imagegalleryinfo").attr("data-id",$(this).attr("id").substring(14));
         viewStudentGalleryImages("#"+$(this).attr("id"));
       });
       for(var i=0;i<data.length;i++)
@@ -594,13 +634,7 @@ function viewStudentGallery(){
 
     });
 
-    $("#studentgallerydeleterbutton").click(function(){
-      $.getJSON("./deletestudentgallery.php?id="+id,function(data){
-        alert(JSON.stringify(data));
-      });
-
     $('[data-toggle="tooltip"]').tooltip();
-    });
 }
 $("#createstudentgallerysubmit").click(function(){
     var name=urlfriendly($("#createstudentgalleryname").val());
@@ -684,7 +718,21 @@ $(document).ready(function(){
   viewStudentGallery();
   viewStudentGalleryImages();
   $('[data-toggle="tooltip"]').tooltip();
+  $("#studentgallerydeleterbutton").click(function(){
+    var id=$(this).attr("data-id");
+    $.getJSON("./deletestudentgallery.php?id="+id,function(data){
+      if(data.status){
+        viewStudentGallery();
+        viewStudentGalleryImages();
+        $(".modal").modal("hide");
+      }
+      else {
+        alert("error:"+data.message)
+      }
+    })
+  });
   $(".mobilemenubtn").click(function(){
+    $(".modal").modal("hide");
     if($(this).attr("data-view")=="open")
     {
         $("#mobileprimarydropdown").slideUp("fast");
