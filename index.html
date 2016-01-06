@@ -144,9 +144,7 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div id="facultyinfomodaluploader" class="beforeupload">
-                    <i class="glyphicon glyphicon-picture"></i>
-                    <p> Drag And Drop files here</p>
-                    <img style="display:none" class="modal-thumbnail img-responsive" id="facultyinfomodalthumbnail" src="" />
+                    <img class="modal-thumbnail img-responsive" id="facultyinfomodalthumbnail" src="./def/picture-placeholder.png" />
                   </div>
                 </div>
                 <div class="col-sm-6">
@@ -155,6 +153,13 @@
                   <input type="text" class="form-control" id='facultyinfomodalname' placeholder="Designation"/>
                   <br>
                   <textarea  maxlength="5000"class="form-control" id="facultyinfomodaldescription" placeholder="Information"></textarea>
+                  <br>
+                  <div class="input-group">
+                    <div class="radio">
+                      <label class="radio-inline"><input type="radio" name="optradio">Core Faculty</label>
+                      <label class="radio-inline"><input type="radio" name="optradio">Visiting Faculty</label>
+                    </div>
+                  </div>
                   <br>
                   <input class="btn btn-primary" id="facultyinfomodalfileuploader" type="file" id="facultyinfomodalimage"/>
                   <div id="facultyinfomodalprogress">

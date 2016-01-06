@@ -728,7 +728,7 @@ function pageslider(div1,div2,wrapper,time){
       });
 }
 $(document).ready(function(){
-  var active="studentgallery";
+  var active="facultyinfo";
   $("#"+active).slideDown();
   viewCarouselActive();
   viewGallery();
@@ -811,6 +811,7 @@ $(document).ready(function(){
       }
   });
 //Drag and Drop controllers
+addliveimgupdate("facultyinfomodalfileuploader","facultyinfomodalthumbnail");
 
 var dropzone=document.getElementById('facultyinfomodaluploader');
 dropzone.ondrop=function(e){
