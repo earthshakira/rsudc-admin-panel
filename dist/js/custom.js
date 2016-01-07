@@ -695,16 +695,65 @@ $("#createstudentgalleryname").keyup(function(e){
     }
 });
 
+function facultyinfodelete(id){
+  $.getJSON("./deletefacultyinfo.php?id="+id,function(data){
+    alert(data);
+    if(data.status){
+    $("#peopledisplayer").html()
+    viewFaculty();
+    }
+  });
+}
 
+function facultyinfoupdate(id){
+alert("update"+id);
+}
 function facultyinfomodalcleanup(){
   $('#facultyinfomodalname').val("");
   $('#facultyinfomodaldesignation').val("");
   $('#facultyinfomodaldescription').val("");
   $("#facultyinfomodalfileuploader").val("");
+  viewFaculty();
   $("#facultyinfomodal").modal("hide");
+
 }
+
 function viewFaculty(){
-  facultyinfomodalcleanup();
+  $.getJSON("./getfacultyinfo.php",function(data){
+    var htmlString="";
+    if(data.length){
+      var defs=Object.getOwnPropertyNames(data[0]);
+      console.log(defs);
+      for(var i=0;i<data.length;i++){
+        htmlString+="<div class=\"peopleGrid\"";
+        for(var j=0;j<defs.length;j++)
+        {
+          htmlString+=" data-"+defs[j]+"=\""+data[i][defs[j]]+"\"";
+        }
+        htmlString+=" style=\"background-image:URL(\'"+data[i].image+"\')\" >";
+        htmlString+="<div class=\"wrapper\"><i class=\"glyphicon glyphicon glyphicon-user\"></i></div>";
+        htmlString+="<div class=\"titleslider bg-primary\"><h5>"+data[i].name+","+data[i].designation+"</h5></div>";
+        htmlString+="</div>";
+      }
+      $("#peoplegallery").html(htmlString);
+      $(".peopleGrid").click(function(){
+        if($(this).hasClass("peopleGridDefault"))
+        return;
+        $("#peopledisplayer").attr("data-id",$(this).attr("data-id"));
+        $("#peopledisplayer .image").html("<img class=\"modal-thumbnail\" id=\"facultyinfonewimagedisplayer\" src=\""+$(this).attr("data-image")+"\" /><div class=\"wrapper\"><input id=\"facultyinfonewimage\" type=\"file\" /><i class=\"glyphicon glyphicon-file\"></i></div>");
+        var htmlstring="<br><input id=\"facultyinfonewname\" type=\"text\" class=\"form-control\" placeholder=\"Name\" value=\""+$(this).attr("data-name")+"\"/>";
+        htmlstring+="<br><input id=\"facultyinfonewdesig\" type=\"text\" class=\"form-control\" placeholder=\"Designation\" value=\""+$(this).attr("data-designation")+"\"/>";
+        htmlstring+="<br><textarea id=\"facultyinfonewdesc\" type=\"text\" class=\"form-control\" placeholder=\"Description\" >"+$(this).attr("data-description")+"</textarea>";
+        htmlstring+="<br><button type=\"button\" id=\"facultyinfoeditsubmit\" onclick=\"facultyinfoupdate("+$(this).attr("data-id")+")\" class=\"btn btn-success\">Save Changes</button>";
+        htmlstring+="<button type=\"button\" id=\"facultyinfodelete\" onclick=\"$('.faculty-delete-confirm').slideDown('fast')\" class=\"btn btn-danger\">Delete</button>";
+        htmlstring+="<div class=\"faculty-delete-confirm\" style=\"display:none\">";
+        htmlstring+="<button type=\"button\" id=\"facultyinfodeleteconfirm\" onclick=\"facultyinfodelete("+$(this).attr("data-id")+")\" class=\"btn btn-danger\">Confirm</button>";
+        htmlstring+="<button type=\"button\" id=\"facultyinfodeletecancel\" class=\"btn btn-primary\" onclick=\"$('.faculty-delete-confirm').slideUp('fast')\">Cancel</button></div>";
+        $("#peopledisplayer .info").html(htmlstring);
+        addliveimgupdate("facultyinfonewimage","facultyinfonewimagedisplayer");
+      });
+    }
+  })
 }
 //modal file live Update
 function addliveimgupdate(uploader,img){  document.getElementById(uploader).onchange = function (evt) {
@@ -746,6 +795,7 @@ $(document).ready(function(){
   $("#"+active).slideDown();
   viewCarouselActive();
   viewGallery();
+  viewFaculty();
   viewntsPeople();
   viewStudentGallery();
   viewStudentGalleryImages();
@@ -847,7 +897,7 @@ $("#facultyinfomodalsubmit").click(function(){
       formdata.append("file",file[0]);
       formdata.append("path","../data/facultyinfo/");
       addprogressbar("#facultyinfomodalprogress",file[0].name,"progressbar"+progressid,false);
-      fileupload(formdata,"progressbar"+progressid++,"upload_to_facultyinfo.php","facultyinfomodalwarnings","viewFaculty",null);
+      fileupload(formdata,"progressbar"+progressid++,"upload_to_facultyinfo.php","facultyinfomodalwarnings","facultyinfomodalcleanup",null);
 
     }
     else if(file[i].size<maxfilesize){
