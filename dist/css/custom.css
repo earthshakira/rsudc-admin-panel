@@ -221,19 +221,19 @@ table{
 	border-collapse: collapse;
 }
 
-.gallery-controls,.imagegallery-controls{
+.studentswork-controls,.gallery-controls,.imagegallery-controls{
 	padding:10px;
 	font-size: 20px;
 }
 .ntsfaculty-controls{
 	font-size: 12px;
 }
-.gallery-controls i,.ntsfaculty-controls i,.imagegallery-controls i{
+.studentswork-controls i,.gallery-controls i,.ntsfaculty-controls i,.imagegallery-controls i{
 	cursor:pointer;
 	padding:10px;
 	margin:5px;
 }
-.gallery-controls i:hover,.ntsfaculty-controls i:hover,.imagegallery-controls i:hover{
+.studentswork-controls i:hover,.gallery-controls i:hover,.ntsfaculty-controls i:hover,.imagegallery-controls i:hover{
 	color:#117ac4;
 }
 
@@ -467,4 +467,15 @@ table{
 	position:absolute;
 	width:20%;
 	z-index: 100;
+}
+
+.file-label{
+	margin-top: 0px !important;
+}
+
+.studentswork-controls .file_button_container{
+	margin-top: 10px;
+	border-radius: 50%;
+	position:relative;
+	display: inline-block;
 }

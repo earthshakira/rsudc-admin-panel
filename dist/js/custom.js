@@ -697,7 +697,7 @@ $("#createstudentgalleryname").keyup(function(e){
 
 function facultyinfodelete(id){
   $.getJSON("./deletefacultyinfo.php?id="+id,function(data){
-    alert(data);
+    //alert(data);
     if(data.status){
     $("#peopledisplayer").html()
     viewFaculty();
@@ -773,6 +773,65 @@ function viewFaculty(){
     }
   })
 }
+
+function viewStudentsWork(filter,value){
+  var url="./getstudentswork.php";
+  if(filter&&value)url+="?filter="+filter+"&value="+value;
+  $.getJSON(url,function(data){
+    if(!data.length){
+      $("#studentprojects").html("Nothhing to Display");
+      return;
+    }
+    var heads=["Title","Semester","Year","Actions"];
+    var widths=["30%","20%","20%","50%"];
+    var defs=["title","sem","year"];
+    var type=["text","text","text","controls"];
+    var extra="<a data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Right Click And click Save Link as... to Download\" class=\"studentworkdownloader\"><i class=\"glyphicon glyphicon-save\"></i></a><i class=\"glyphicon glyphicon-remove\"></i><div data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Upload a new File\" class=\"file_button_container bg-primary\"><input type=\"file\"></div><div class=\"delete-confirm\" style=\"display:none;\"><div style=\"font-size:8px;\" class=\"btn btn-danger\">Confirm</div><div style=\"font-size:8px;margin-left:10px\" class=\"btn btn-primary\">Cancel</div></div>";
+    var htmlString=tableprint(heads,widths,defs,type,data,"studentswork",extra,"studentswork-controls");
+    $("#studentprojects").html(htmlString);
+    for(var i=0;i<data.length;i++)
+    {
+      $("#studentswork"+data[i].id).children(".studentworkdownloader").attr("href",data[i].file);
+    }
+
+    $(".studentswork-controls .glyphicon-remove").click(function(){
+      $(this).parent().children(".delete-confirm").slideDown();
+    });
+
+    $(".studentswork-controls .delete-confirm .btn-primary").click(function(){
+      $(this).parent(".delete-confirm").slideUp();
+    });
+
+    $(".studentswork-controls .delete-confirm .btn-danger").click(function(){
+        var id=$(this).parent().parent().attr("id").substring(12);
+        $.getJSON("./deletestudentswork.php?id="+id,function(data){
+            if(data.status)
+            {
+              viewStudentsWork(filter,value);
+            }
+            else{
+              alert("error");
+            }
+        });
+    });
+    $(".studentswork-controls .file_button_container").change(function(e){
+      var id=$(this).parent().attr("id").substring(12);
+      var project=$(this).children("input").prop("files");
+      if(project[0].type.indexOf("pdf")<0)
+        {
+          $("#studentworkupload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Selected file in not PDF</p>");
+          return;
+        }
+        var formdata=new FormData();
+        formdata.append("file",project[0]);
+        formdata.append("path","../data/studentswork/");
+        addprogressbar("#studentworkupload-meta",project[0].name,"progressbar"+progressid,false);
+        fileupload(formdata,"progressbar"+progressid++,"replacestudentswork.php?id="+id,"studentworkupload-warnings","viewStudentsWork",null);
+        $("#studentworktitle").val("");
+        $("#studentworkfile").val("");
+    });
+  });
+}
 //modal file live Update
 function addliveimgupdate(uploader,img){  document.getElementById(uploader).onchange = function (evt) {
       var tgt = evt.target || window.event.srcElement;
@@ -808,15 +867,19 @@ function pageslider(div1,div2,wrapper,time){
         $("#"+wrapper).css("overflow-y","auto");
       });
 }
+
+
 $(document).ready(function(){
-  var active="facultyinfo";
+  var active="studentswork";
   $("#"+active).slideDown();
   viewCarouselActive();
   viewGallery();
   viewFaculty();
   viewntsPeople();
+  viewStudentsWork();
   viewStudentGallery();
   viewStudentGalleryImages();
+
   $('[data-toggle="tooltip"]').tooltip({container: "body"});
   $("#studentgallerydeleterbutton").click(function(){
     var id=$(this).attr("data-id");
@@ -929,4 +992,32 @@ $("#facultyinfomodalsubmit").click(function(){
   }
 })
 addliveimgupdate("facultyinfomodalfileuploader","facultyinfomodalthumbnail");
+
+$("#studentworkupload").click(function(){
+  var sem=$("#studentworksemselect").val();
+  var year=$("#studentworkyearselect").val();
+  var title=$("#studentworktitle").val();
+  var project=$("#studentworkfile").prop("files");
+  //var image=$("#studentworkthumbnail").prop("files");
+  if(sem&&year&&title&&project.length){
+    $("#studentworkupload-warnings").html("");
+    if(project[0].type.indexOf("pdf")<0)
+      {
+        $("#studentworkupload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Selected file in not PDF</p>");
+        return;
+      }
+      var formdata=new FormData();
+      formdata.append("title",title);
+      formdata.append("sem",sem);
+      formdata.append("year",year);
+      formdata.append("file",project[0]);
+      formdata.append("path","../data/studentswork/");
+      addprogressbar("#studentworkupload-meta",project[0].name,"progressbar"+progressid,false);
+      fileupload(formdata,"progressbar"+progressid++,"upload_to_studentworks.php","studentworkupload-warnings","viewStudentsWork",null);
+      $("#studentworktitle").val("");
+      $("#studentworkfile").val("");
+  }else{
+    $("#studentworkupload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Please Fill All Data </p>");
+  }
+});
 });
