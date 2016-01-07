@@ -706,7 +706,25 @@ function facultyinfodelete(id){
 }
 
 function facultyinfoupdate(id){
-alert("update"+id);
+  var formdata=new FormData();
+  formdata.append("path","../data/facultyinfo/");
+  var file=$("#facultyinfonewimage").prop('files');
+  var name=$("#facultyinfonewname").val();
+  var desig=$("#facultyinfonewdesig").val();
+  var desc=$("#facultyinfonewdesc").val();
+  formdata.append("id",id);
+  if(name)formdata.append("name",name);
+  if(desig)formdata.append("designation",desig);
+  if(desc)formdata.append("description",desc);
+  if(file.length){
+  formdata.append("file",file[0]);
+  addprogressbar("#newfacultyinfoprogress",file[0].name,"newfacultyinfoprogressbar",false);
+  fileupload(formdata,"newfacultyinfoprogressbar","editfacultyinfo.php","newfacultyinfowarnings","viewFaculty");
+  }
+  else{
+      formupload(formdata,"editfacultyinfo.php","viewFaculty");
+    }
+
 }
 function facultyinfomodalcleanup(){
   $('#facultyinfomodalname').val("");
