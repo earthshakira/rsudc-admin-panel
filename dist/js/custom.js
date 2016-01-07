@@ -95,8 +95,11 @@ $("#frontcarouselimgupload").on("click",function(){
       addprogressbar("#upload-meta",file[i].name,"progressbar"+progressid,true);
       fileupload(formdata,"progressbar"+progressid++,"upload_to_gallery.php","upload-warnings","viewGallery",null);
     }
-    else{
+    else if(file[i].size<maxfilesize){
       $("#upload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" exceeds max upload size of "+mbsize+"MB<p>");
+    }
+    else{
+      $("#upload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" not an image!!!<p>");
     }
   }
     $("#newimage").val("");
@@ -692,6 +695,17 @@ $("#createstudentgalleryname").keyup(function(e){
     }
 });
 
+
+function facultyinfomodalcleanup(){
+  $('#facultyinfomodalname').val("");
+  $('#facultyinfomodaldesignation').val("");
+  $('#facultyinfomodaldescription').val("");
+  $("#facultyinfomodalfileuploader").val("");
+  $("#facultyinfomodal").modal("hide");
+}
+function viewFaculty(){
+  facultyinfomodalcleanup();
+}
 //modal file live Update
 function addliveimgupdate(uploader,img){  document.getElementById(uploader).onchange = function (evt) {
       var tgt = evt.target || window.event.srcElement;
@@ -817,13 +831,31 @@ $(".peopleGridDefault").click(function(){
 });
 
 $("#facultyinfomodalsubmit").click(function(){
+    $("#facultyinfomodalwarnings").html("");
   var name=$('#facultyinfomodalname').val();
   var designation=$('#facultyinfomodaldesignation').val();
   var desc=$('#facultyinfomodaldescription').val();
   var file=$("#facultyinfomodalfileuploader").prop("files");
   var type=$("[name='facutlytyperadio']:checked").attr("data-value");
   if(name&&file.length&&designation&&desc&&type){
-    alert("yolo|"+type);
+    if(file[0].size<maxfilesize&&file[0].type.indexOf("image")>-1){
+      var formdata=new FormData();
+      formdata.append("name",name);
+      formdata.append("designation",designation);
+      formdata.append("description",desc);
+      formdata.append("type",type);
+      formdata.append("file",file[0]);
+      formdata.append("path","../data/facultyinfo/");
+      addprogressbar("#facultyinfomodalprogress",file[0].name,"progressbar"+progressid,false);
+      fileupload(formdata,"progressbar"+progressid++,"upload_to_facultyinfo.php","facultyinfomodalwarnings","viewFaculty",null);
+
+    }
+    else if(file[i].size<maxfilesize){
+      $("#facultyinfomodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" exceeds max upload size of "+mbsize+"MB<p>");
+    }
+    else{
+      $("#facultyinfomodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" not an image!!!<p>");
+    }
   }else {
     $("#facultyinfomodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Please Fill All Data <p>");
   }

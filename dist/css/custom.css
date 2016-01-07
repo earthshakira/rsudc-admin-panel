@@ -281,17 +281,8 @@ border:1px solid red;
 .peopleGridDefault:hover i{
 	opacity:1;
 }
-
-#facultyinfomodaluploader.beforeupload{
-	padding:20px;
-	padding-top: 70px;
-	border: 5px dashed rgba(0,0,0,0.2);
-	height:300px;
-	text-align: center;
-}
-#facultyinfomodaluploader.beforeupload p,#facultyinfomodaluploader.beforeupload i{
-	color:rgba(0,0,0,0.2);
-	font-size: 30px;
+#facultyinfomodaluploader img{
+	width:100%;
 }
 
 .bg-success{
