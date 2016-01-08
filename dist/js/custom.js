@@ -865,7 +865,7 @@ function rsudcteamupdate(id){
   if(file.length){
   formdata.append("file",file[0]);
   addprogressbar("#rsudcteamprogress",file[0].name,"newfacultyinfoprogressbar",false);
-  fileupload(formdata,"newfacultyinfoprogressbar","editfacultyinfo.php","rsudcteamwarnings","viewrsudcTeam");
+  fileupload(formdata,"newfacultyinfoprogressbar","editrsudcteam.php","rsudcteamwarnings","viewrsudcTeam");
   }
   else{
       formupload(formdata,"editrsudcteam.php","viewrsudcTeam");
@@ -950,7 +950,7 @@ function rsudcdevupdate(id){
   if(file.length){
   formdata.append("file",file[0]);
   addprogressbar("#rsudcdevprogress",file[0].name,"newfacultyinfoprogressbar",false);
-  fileupload(formdata,"newfacultyinfoprogressbar","editfacultyinfo.php","rsudcdevwarnings","viewrsudcdev");
+  fileupload(formdata,"newfacultyinfoprogressbar","editrsudcdev.php","rsudcdevwarnings","viewrsudcdev");
   }
   else{
       formupload(formdata,"editrsudcdev.php","viewrsudcdev");
@@ -1023,19 +1023,23 @@ function alumnidelete(id){
 
 function alumniupdate(id){
   var formdata=new FormData();
-  formdata.append("path","../data/facultyinfo/");
+  formdata.append("path","../data/alumni");
   var file=$("#alumninewimage").prop('files');
   var name=$("#alumninewname").val();
   var desig=$("#alumninewdesig").val();
   var desc=$("#alumninewdesc").val();
+  var cont=$("#alumninewcont").val();
+  var year=$("#alumninewyearselect").val();
   formdata.append("id",id);
   if(name)formdata.append("name",name);
   if(desig)formdata.append("designation",desig);
   if(desc)formdata.append("description",desc);
+  if(year)formdata.append("year",year);
+  if(cont)formdata.append("contact",cont);
   if(file.length){
   formdata.append("file",file[0]);
   addprogressbar("#alumniprogress",file[0].name,"newfacultyinfoprogressbar",false);
-  fileupload(formdata,"newfacultyinfoprogressbar","editfacultyinfo.php","alumniwarnings","viewalumni");
+  fileupload(formdata,"newfacultyinfoprogressbar","editalumni.php","alumniwarnings","viewalumni");
   }
   else{
       formupload(formdata,"editalumni.php","viewalumni");
@@ -1050,7 +1054,7 @@ function viewalumni(){
       var defs=Object.getOwnPropertyNames(data[0]);
       //console.log(defs);
       for(var i=0;i<data.length;i++){
-        htmlString+="<div class=\"teamGrid\"";
+        htmlString+="<div class=\"alumniGrid\"";
         for(var j=0;j<defs.length;j++)
         {
           htmlString+=" data-"+defs[j]+"=\""+data[i][defs[j]]+"\"";
@@ -1061,20 +1065,27 @@ function viewalumni(){
         htmlString+="</div>";
       }
       $("#alumnigallery").html(htmlString);
-      $(".teamGrid").click(function(){
-        if($(this).hasClass("teamGridDefault"))
+      $(".alumniGrid").click(function(){
+        if($(this).hasClass("alumniGridDefault"))
         return;
         $("#alumnidisplayer").attr("data-id",$(this).attr("data-id"));
         $("#alumnidisplayer .image").html("<img class=\"modal-thumbnail\" id=\"alumninewimagedisplayer\" src=\""+$(this).attr("data-image")+"\" /><div class=\"wrapper\"><input id=\"alumninewimage\" type=\"file\" /><i class=\"glyphicon glyphicon-file\"></i></div>");
         var htmlstring="<br><input id=\"alumninewname\" type=\"text\" class=\"form-control\" placeholder=\"Name\" value=\""+$(this).attr("data-name")+"\"/>";
+        htmlstring+="<br><input id=\"alumninewcont\" type=\"text\" class=\"form-control\" placeholder=\"Contact\" value=\""+$(this).attr("data-contact")+"\"/>";
         htmlstring+="<br><input id=\"alumninewdesig\" type=\"text\" class=\"form-control\" placeholder=\"Designation\" value=\""+$(this).attr("data-designation")+"\"/>";
-        htmlstring+="<br><textarea id=\"alumninewdesc\" type=\"text\" class=\"form-control\" placeholder=\"Description\" >"+$(this).attr("data-description")+"</textarea>";
-        htmlstring+="<br><button type=\"button\" id=\"alumnieditsubmit\" onclick=\"alumniupdate("+$(this).attr("data-id")+")\" class=\"btn btn-success\">Save Changes</button>";
+        htmlstring+="<br><textarea id=\"alumninewdesc\" type=\"text\" class=\"form-control\" placeholder=\"Description\" >"+$(this).attr("data-quote")+"</textarea>";
+        htmlstring+="<br><select class=\"form-control\" id=\"alumninewyearselect\">";
+        var t=Number((new Date()).getFullYear());
+        for(var i=0;i<15;i++)
+        htmlstring+="<option>"+t+" - "+((t--)+2)+"</option>";
+        htmlstring+="</select>";
+        htmlstring+="<button type=\"button\" id=\"alumnieditsubmit\" onclick=\"alumniupdate("+$(this).attr("data-id")+")\" class=\"btn btn-success\">Save Changes</button>";
         htmlstring+="<button type=\"button\" id=\"alumnidelete\" onclick=\"$('.alumni-delete-confirm').slideDown('fast')\" class=\"btn btn-danger\">Delete</button>";
         htmlstring+="<div class=\"alumni-delete-confirm\" style=\"display:none\">";
         htmlstring+="<button type=\"button\" id=\"alumnideleteconfirm\" onclick=\"alumnidelete("+$(this).attr("data-id")+")\" class=\"btn btn-danger\">Confirm</button>";
         htmlstring+="<button type=\"button\" id=\"alumnideletecancel\" class=\"btn btn-primary\" onclick=\"$('.alumni-delete-confirm').slideUp('fast')\">Cancel</button></div>";
         $("#alumnidisplayer .info").html(htmlstring);
+        $("#alumninewyearselect").val($(this).attr("data-year"));
         addliveimgupdate("alumninewimage","alumninewimagedisplayer");
       });
     }
@@ -1089,6 +1100,8 @@ function alumnimodalcleanup(){
   $('#alumnimodaldesignation').val("");
   $('#alumnimodaldescription').val("");
   $("#alumnimodalfileuploader").val("");
+  $('#alumnimodalcontact').val("");
+  $('#alumniyearselect').val("");
   viewalumni();
   $("#alumnimodal").modal("hide");
 }
@@ -1125,13 +1138,13 @@ function pageslider(div1,div2,wrapper,time){
       });
       $("#"+div2).animate({top:'20px'},time,function(){
         $("#"+div1).css("display","none");
-        $("#"+wrapper).css("overflow-y","auto");
+        //$("#"+wrapper).css("overflow-y","auto");
       });
 }
 
 
 $(document).ready(function(){
-  var active="rsudc";
+  var active="alumni";
   $("#"+active).slideDown();
   viewCarouselActive();
   viewGallery();
@@ -1142,7 +1155,7 @@ $(document).ready(function(){
   viewStudentGalleryImages();
   viewrsudcTeam();
   viewrsudcdev();
-
+  viewalumni();
   //nicescrolls
   $("#playground").niceScroll();
   $(".info-box-content").niceScroll();
@@ -1344,4 +1357,37 @@ $("#rsudcdevmodalsubmit").click(function(){
   }
 })
 addliveimgupdate("rsudcdevmodalfileuploader","rsudcdevmodalthumbnail");
+
+$("#alumnimodalsubmit").click(function(){
+    $("#alumnimodalwarnings").html("");
+  var name=$('#alumnimodalname').val();
+  var desc=$('#alumnimodaldescription').val();
+  var desg=$('#alumnimodaldesignation').val();
+  var cont=$('#alumnimodalcontact').val();
+  var year=$('#alumniyearselect').val();
+  var file=$("#alumnimodalfileuploader").prop("files");
+  if(name&&file.length&&desc&&cont&&desg&&year){
+    if(file[0].size<maxfilesize&&file[0].type.indexOf("image")>-1){
+      var formdata=new FormData();
+      formdata.append("name",name);
+      formdata.append("description",desc);
+      formdata.append("designation",desg);
+      formdata.append("contact",cont);
+      formdata.append("year",year);
+      formdata.append("file",file[0]);
+      formdata.append("path","../data/alumni/");
+      addprogressbar("#alumnimodalprogress",file[0].name,"progressbar"+progressid,false);
+      fileupload(formdata,"progressbar"+progressid++,"upload_to_alumni.php","alumnimodalwarnings","alumnimodalcleanup",null);
+    }
+    else if(file[0].size<maxfilesize){
+      $("#alumnimodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[0].name+" exceeds max upload size of "+mbsize+"MB<p>");
+    }
+    else{
+      $("#alumnimodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[0].name+" not an image!!!<p>");
+    }
+  }else {
+    $("#alumnimodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Please Fill All Data <p>");
+  }
+})
+addliveimgupdate("alumnimodalfileuploader","alumnimodalthumbnail");
 });

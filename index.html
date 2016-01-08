@@ -459,9 +459,20 @@
                   <div class="col-sm-6">
                     <input type="text" class="form-control" id='alumnimodalname' placeholder="Name"/>
                     <br>
+                    <select class="form-control" id="alumniyearselect">
+                    </select>
+                    <script>
+                      var x=document.getElementById("alumniyearselect");
+                      var t=Number((new Date()).getFullYear());
+                      for(var i=0;i<15;i++)
+                      x.innerHTML+="<option>"+t+" - "+((t--)+2)+"</option>";
+                    </script>
+                    <br>
+                    <input type="text" class="form-control" id='alumnimodalcontact' placeholder="Contact"/>
+                    <br>
                     <input type="text" class="form-control" id='alumnimodaldesignation' placeholder="Designation"/>
                     <br>
-                    <textarea  maxlength="10000" class="form-control" id="alumnimodaldescription" placeholder="Description"></textarea>
+                    <textarea  maxlength="10000" class="form-control" id="alumnimodaldescription" placeholder="Few Words.."></textarea>
                     <br>
                     <input class="btn btn-primary" style="width:100%;text-align:left" id="alumnimodalfileuploader" type="file"/>
                     <div id="alumnimodalprogress">
@@ -476,7 +487,41 @@
             </div>
           </div>
         </div>
-        
+        <div class='info-box'>
+          <div class='info-box-head row'>
+            <div class="col-sm-11 col-xs-10">
+              <h4 class="info-box-title">Team Dashboard</h4>
+            </div>
+            <div class="col-sm-1 col-xs-2 info-box-minimise" data-visible="true"><i class="glyphicon glyphicon-minus"></i></div>
+          </div>
+          <div class='info-box-content'>
+            <div class="alumniGrid alumniGridDefault" onclick="$('#alumnimodal').modal()">
+              <i class="fa fa-plus-circle"></i>
+            </div>
+            <div id="alumnigallery">
+
+            </div>
+          </div>
+        </div>
+        <div class='info-box'>
+          <div class='info-box-head row'>
+            <div class="col-sm-11 col-xs-10">
+              <h4 class="info-box-title">Person Data</h4>
+            </div>
+            <div class="col-sm-1 col-xs-2 info-box-minimise" data-visible="true"><i class="glyphicon glyphicon-minus"></i></div>
+          </div>
+          <div class='info-box-content'>
+            <div id="alumnidisplayer" class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6 image"></div>
+                <div class="col-sm-6 info"></div>
+              </div>
+            </div>
+            <div id="newalumniprogress">
+            </div>
+            <div id="newalumniwarnings"></div>
+          </div>
+        </div>
       </div>
     </div>
   <div id='studentgallery' class="playpage">

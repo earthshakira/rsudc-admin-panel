@@ -246,7 +246,7 @@ table{
 }
 
 
-.teamGrid,.developmentcellGrid,.peopleGrid{
+.teamGrid,.developmentcellGrid,.peopleGrid,.alumniGrid{
 	position: relative;
 	width:20%;
 	height:200px;
@@ -260,7 +260,7 @@ table{
 	overflow: hidden;
 	}
 
-.peopleGrid  .wrapper,.developmentcellGrid  .wrapper,.teamGrid  .wrapper{
+.peopleGrid  .wrapper,.developmentcellGrid  .wrapper,.teamGrid  .wrapper,.alumniGrid  .wrapper{
 	width:100%;
 	height: 100%;
 	position:absolute;
@@ -268,15 +268,15 @@ table{
 	opacity:0;
 	transition: all 0.3s ease-in;
 }
-.peopleGrid  .wrapper i,.developmentcellGrid  .wrapper i,.teamGrid  .wrapper i{
+.peopleGrid  .wrapper i,.developmentcellGrid  .wrapper i,.teamGrid  .wrapper i,.alumniGrid  .wrapper i{
 	color:white;
 	font-size: 10vh;
 	margin-top: 20%;
 }
-.peopleGrid:hover  .wrapper,.developmentcellGrid:hover  .wrapper,.teamGrid:hover  .wrapper{
+.peopleGrid:hover  .wrapper,.developmentcellGrid:hover  .wrapper,.teamGrid:hover  .wrapper,.alumniGrid:hover  .wrapper{
 	opacity:0.4;
 }
-.peopleGrid .titleslider,.developmentcellGrid .titleslider,.teamGrid .titleslider{
+.peopleGrid .titleslider,.developmentcellGrid .titleslider,.teamGrid .titleslider,.alumniGrid .titleslider{
 	width:100%;
 	position:absolute;
 	transition: all 0.3s linear;
@@ -284,7 +284,7 @@ table{
 	bottom:-50px;
 	border-left:5px solid #ffcc00;
 }
-.peopleGrid:hover .titleslider,.developmentcellGrid:hover .titleslider,.teamGrid:hover .titleslider{
+.peopleGrid:hover .titleslider,.developmentcellGrid:hover .titleslider,.teamGrid:hover .titleslider,.alumniGrid:hover .titleslider{
 
 	bottom: 0px;
 }
@@ -304,7 +304,7 @@ table{
 	overflow: hidden;
 	cursor: pointer;
 }
-#facultyinfoeditsubmit,#facultyinfodelete,#rsudcteameditsubmit,#rsudcteamdelete,#rsudcdeveditsubmit,#rsudcdevdelete{
+#facultyinfoeditsubmit,#facultyinfodelete,#rsudcteameditsubmit,#rsudcteamdelete,#rsudcdeveditsubmit,#rsudcdevdelete,#alumnieditsubmit,#alumnidelete{
 	float:right;
 	margin:10px;
 }
@@ -327,7 +327,7 @@ table{
 	position: absolute;
 	 color:green;
 }
-.peopleGridDefault,.developmentcellGridDefault,.teamGridDefault{
+.peopleGridDefault,.developmentcellGridDefault,.teamGridDefault,.alumniGridDefault{
 	border: 5px dashed rgba(0,0,0,0.2);
 	cursor: pointer;
 	background-repeat: no-repeat;
@@ -335,19 +335,19 @@ table{
 	text-align: center;
 }
 
-.peopleGridDefault i,.developmentcellGridDefault i,.teamGridDefault i{
+.peopleGridDefault i,.developmentcellGridDefault i,.teamGridDefault i,.alumniGridDefault i{
 	font-size: 100px;
 	opacity: 0.2;
 	line-height: 200px;
 	transition:all 0.5s ease;
 }
-.peopleGridDefault:hover,.developmentcellGridDefault:hover,.teamGridDefault:hover{
+.peopleGridDefault:hover,.developmentcellGridDefault:hover,.teamGridDefault:hover,.alumniGridDefault:hover{
 	border: 5px dashed rgba(0,0,0,0.7);
 }
-#peopledisplayer .image,#rsudcteamdisplayer .image,#rsudcdevdisplayer .image{
+#peopledisplayer .image,#rsudcteamdisplayer .image,#rsudcdevdisplayer .image,#alumnidisplayer .image{
 	padding: 0px;
 }
-#peopledisplayer .image img,#rsudcteamdisplayer .image img,#rsudcdevdisplayer .image img{
+#peopledisplayer .image img,#rsudcteamdisplayer .image img,#rsudcdevdisplayer .image img,#alumnidisplayer .image img{
 	width:100%;
 }
 #ntspeopledisplayer{
@@ -356,19 +356,19 @@ table{
 #ntspeopledisplayer table{
 	width:100%;
 }
-.peopleGridDefault:hover i,.developmentcellGridDefault:hover i,.teamGridDefault:hover i{
+.peopleGridDefault:hover i,.developmentcellGridDefault:hover i,.teamGridDefault:hover i,.alumniGridDefault:hover i{
 	opacity:1;
 }
 .modal-thumbnail{
 	width:100%;
 }
 
-.faculty-delete-confirm,.rsudcteam-delete-confirm,.rsudcdev-delete-confirm{
+.faculty-delete-confirm,.rsudcteam-delete-confirm,.rsudcdev-delete-confirm,.alumni-delete-confirm{
 	margin-top: 60px;
 	width: 100%;
 }
 
-.faculty-delete-confirm .btn-danger,.faculty-delete-confirm .btn-primary,.rsudcteam-delete-confirm .btn-danger,.rsudcteam-delete-confirm .btn-primary,.rsudcdev-delete-confirm .btn-danger,.rsudcdev-delete-confirm .btn-primary{
+.faculty-delete-confirm .btn-danger,.faculty-delete-confirm .btn-primary,.rsudcteam-delete-confirm .btn-danger,.rsudcteam-delete-confirm .btn-primary,.rsudcdev-delete-confirm .btn-danger,.rsudcdev-delete-confirm .btn-primary,.alumni-delete-confirm .btn-danger,.alumni-delete-confirm .btn-primary{
 	float:right;
 	margin: 10px;
 }
