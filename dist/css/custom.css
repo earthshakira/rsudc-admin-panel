@@ -304,7 +304,7 @@ table{
 	overflow: hidden;
 	cursor: pointer;
 }
-#facultyinfoeditsubmit,#facultyinfodelete{
+#facultyinfoeditsubmit,#facultyinfodelete,#rsudcteameditsubmit,#rsudcteamdelete,#rsudcdeveditsubmit,#rsudcdevdelete{
 	float:right;
 	margin:10px;
 }
@@ -344,10 +344,10 @@ table{
 .peopleGridDefault:hover,.developmentcellGridDefault:hover,.teamGridDefault:hover{
 	border: 5px dashed rgba(0,0,0,0.7);
 }
-#peopledisplayer .image{
+#peopledisplayer .image,#rsudcteamdisplayer .image,#rsudcdevdisplayer .image{
 	padding: 0px;
 }
-#peopledisplayer .image img{
+#peopledisplayer .image img,#rsudcteamdisplayer .image img,#rsudcdevdisplayer .image img{
 	width:100%;
 }
 #ntspeopledisplayer{
@@ -363,12 +363,12 @@ table{
 	width:100%;
 }
 
-.faculty-delete-confirm{
+.faculty-delete-confirm,.rsudcteam-delete-confirm,.rsudcdev-delete-confirm{
 	margin-top: 60px;
 	width: 100%;
 }
 
-.faculty-delete-confirm .btn-danger,.faculty-delete-confirm .btn-primary{
+.faculty-delete-confirm .btn-danger,.faculty-delete-confirm .btn-primary,.rsudcteam-delete-confirm .btn-danger,.rsudcteam-delete-confirm .btn-primary,.rsudcdev-delete-confirm .btn-danger,.rsudcnav-delete-confirm .btn-primary{
 	float:right;
 	margin: 10px;
 }

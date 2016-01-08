@@ -699,7 +699,8 @@ function facultyinfodelete(id){
   $.getJSON("./deletefacultyinfo.php?id="+id,function(data){
     //alert(data);
     if(data.status){
-    $("#peopledisplayer").html()
+    $("#peopledisplayer .image").html("");
+    $("#peopledisplayer .info").html("");
     viewFaculty();
     }
   });
@@ -733,7 +734,6 @@ function facultyinfomodalcleanup(){
   $("#facultyinfomodalfileuploader").val("");
   viewFaculty();
   $("#facultyinfomodal").modal("hide");
-
 }
 
 function viewFaculty(){
@@ -741,7 +741,7 @@ function viewFaculty(){
     var htmlString="";
     if(data.length){
       var defs=Object.getOwnPropertyNames(data[0]);
-      console.log(defs);
+      //console.log(defs);
       for(var i=0;i<data.length;i++){
         htmlString+="<div class=\"peopleGrid\"";
         for(var j=0;j<defs.length;j++)
@@ -770,6 +770,9 @@ function viewFaculty(){
         $("#peopledisplayer .info").html(htmlstring);
         addliveimgupdate("facultyinfonewimage","facultyinfonewimagedisplayer");
       });
+    }
+    else{
+        $("#peoplegallery").html("");
     }
   })
 }
@@ -832,6 +835,94 @@ function viewStudentsWork(filter,value){
     });
   });
 }
+
+//student work functions done
+//rsudc functions start
+
+
+function rsudcteamdelete(id){
+  $.getJSON("./deletersudcteam.php?id="+id,function(data){
+    //alert(data);
+    if(data.status){
+    $("#rsudcteamdisplayer .image").html("");
+    $("#rsudcteamdisplayer .info").html("");
+    viewrsudcTeam();
+    }
+  });
+}
+
+function rsudcteamupdate(id){
+  var formdata=new FormData();
+  formdata.append("path","../data/facultyinfo/");
+  var file=$("#rsudcteamnewimage").prop('files');
+  var name=$("#rsudcteamnewname").val();
+  var desig=$("#rsudcteamnewdesig").val();
+  var desc=$("#rsudcteamnewdesc").val();
+  formdata.append("id",id);
+  if(name)formdata.append("name",name);
+  if(desig)formdata.append("designation",desig);
+  if(desc)formdata.append("description",desc);
+  if(file.length){
+  formdata.append("file",file[0]);
+  addprogressbar("#rsudcteamprogress",file[0].name,"newfacultyinfoprogressbar",false);
+  fileupload(formdata,"newfacultyinfoprogressbar","editfacultyinfo.php","rsudcteamwarnings","viewrsudcTeam");
+  }
+  else{
+      formupload(formdata,"editrsudcteam.php","viewrsudcTeam");
+    }
+
+}
+
+function viewrsudcTeam(){
+  $.getJSON("./getrsudcteam.php",function(data){
+    var htmlString="";
+    if(data.length){
+      var defs=Object.getOwnPropertyNames(data[0]);
+      //console.log(defs);
+      for(var i=0;i<data.length;i++){
+        htmlString+="<div class=\"teamGrid\"";
+        for(var j=0;j<defs.length;j++)
+        {
+          htmlString+=" data-"+defs[j]+"=\""+data[i][defs[j]]+"\"";
+        }
+        htmlString+=" style=\"background-image:URL(\'"+data[i].image+"\')\" >";
+        htmlString+="<div class=\"wrapper\"><i class=\"glyphicon glyphicon glyphicon-user\"></i></div>";
+        htmlString+="<div class=\"titleslider bg-primary\"><h5>"+data[i].name+","+data[i].designation+"</h5></div>";
+        htmlString+="</div>";
+      }
+      $("#rsudcteamgallery").html(htmlString);
+      $(".teamGrid").click(function(){
+        if($(this).hasClass("teamGridDefault"))
+        return;
+        $("#rsudcteamdisplayer").attr("data-id",$(this).attr("data-id"));
+        $("#rsudcteamdisplayer .image").html("<img class=\"modal-thumbnail\" id=\"rsudcteamnewimagedisplayer\" src=\""+$(this).attr("data-image")+"\" /><div class=\"wrapper\"><input id=\"rsudcteamnewimage\" type=\"file\" /><i class=\"glyphicon glyphicon-file\"></i></div>");
+        var htmlstring="<br><input id=\"rsudcteamnewname\" type=\"text\" class=\"form-control\" placeholder=\"Name\" value=\""+$(this).attr("data-name")+"\"/>";
+        htmlstring+="<br><input id=\"rsudcteamnewdesig\" type=\"text\" class=\"form-control\" placeholder=\"Designation\" value=\""+$(this).attr("data-designation")+"\"/>";
+        htmlstring+="<br><textarea id=\"rsudcteamnewdesc\" type=\"text\" class=\"form-control\" placeholder=\"Description\" >"+$(this).attr("data-description")+"</textarea>";
+        htmlstring+="<br><button type=\"button\" id=\"rsudcteameditsubmit\" onclick=\"rsudcteamupdate("+$(this).attr("data-id")+")\" class=\"btn btn-success\">Save Changes</button>";
+        htmlstring+="<button type=\"button\" id=\"rsudcteamdelete\" onclick=\"$('.rsudcteam-delete-confirm').slideDown('fast')\" class=\"btn btn-danger\">Delete</button>";
+        htmlstring+="<div class=\"rsudcteam-delete-confirm\" style=\"display:none\">";
+        htmlstring+="<button type=\"button\" id=\"rsudcteamdeleteconfirm\" onclick=\"rsudcteamdelete("+$(this).attr("data-id")+")\" class=\"btn btn-danger\">Confirm</button>";
+        htmlstring+="<button type=\"button\" id=\"rsudcteamdeletecancel\" class=\"btn btn-primary\" onclick=\"$('.faculty-delete-confirm').slideUp('fast')\">Cancel</button></div>";
+        $("#rsudcteamdisplayer .info").html(htmlstring);
+        addliveimgupdate("rsudcteamnewimage","rsudcteamnewimagedisplayer");
+      });
+    }
+    else{
+        $("#rsudcteamgallery").html("");
+    }
+  })
+}
+
+function rsudcteammodalcleanup(){
+  $('#rsudcteammodalname').val("");
+  $('#rsudcteammodaldesignation').val("");
+  $('#rsudcteammodaldescription').val("");
+  $("#rsudcteammodalfileuploader").val("");
+  viewrsudcTeam();
+  $("#rsudcteammodal").modal("hide");
+}
+
 //modal file live Update
 function addliveimgupdate(uploader,img){  document.getElementById(uploader).onchange = function (evt) {
       var tgt = evt.target || window.event.srcElement;
@@ -870,7 +961,7 @@ function pageslider(div1,div2,wrapper,time){
 
 
 $(document).ready(function(){
-  var active="studentswork";
+  var active="rsudc";
   $("#"+active).slideDown();
   viewCarouselActive();
   viewGallery();
@@ -879,7 +970,7 @@ $(document).ready(function(){
   viewStudentsWork();
   viewStudentGallery();
   viewStudentGalleryImages();
-
+  viewrsudcTeam();
   $('[data-toggle="tooltip"]').tooltip({container: "body"});
   $("#studentgallerydeleterbutton").click(function(){
     var id=$(this).attr("data-id");
@@ -912,6 +1003,8 @@ $(document).ready(function(){
   });
 
   addliveimgupdate("modalfileuploader","carouselmodalthumbnail");
+
+
   $(".sidebar-btn").click(function(){
     var next=$(this).attr("data-value");
       if(active==next)return;
@@ -956,10 +1049,6 @@ $(document).ready(function(){
       }
   });
 //Drag and Drop controller
-
-$(".peopleGridDefault").click(function(){
-  $('#facultyinfomodal').modal()
-});
 
 $("#facultyinfomodalsubmit").click(function(){
     $("#facultyinfomodalwarnings").html("");
@@ -1020,4 +1109,34 @@ $("#studentworkupload").click(function(){
     $("#studentworkupload-warnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Please Fill All Data </p>");
   }
 });
+
+//rsudc teamsubmit click function
+$("#rsudcteammodalsubmit").click(function(){
+    $("#rsudcteammodalwarnings").html("");
+  var name=$('#rsudcteammodalname').val();
+  var designation=$('#rsudcteammodaldesignation').val();
+  var desc=$('#rsudcteammodaldescription').val();
+  var file=$("#rsudcteammodalfileuploader").prop("files");
+  if(name&&file.length&&designation&&desc){
+    if(file[0].size<maxfilesize&&file[0].type.indexOf("image")>-1){
+      var formdata=new FormData();
+      formdata.append("name",name);
+      formdata.append("designation",designation);
+      formdata.append("description",desc);
+      formdata.append("file",file[0]);
+      formdata.append("path","../data/rsudcteam/");
+      addprogressbar("#rsudcteammodalprogress",file[0].name,"progressbar"+progressid,false);
+      fileupload(formdata,"progressbar"+progressid++,"upload_to_rsudcteam.php","rsudcteammodalwarnings","rsudcteammodalcleanup",null);
+    }
+    else if(file[i].size<maxfilesize){
+      $("#rsudcteammodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" exceeds max upload size of "+mbsize+"MB<p>");
+    }
+    else{
+      $("#rsudcteammodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>"+file[i].name+" not an image!!!<p>");
+    }
+  }else {
+    $("#rsudcteammodalwarnings").html("<p class='text-danger'><i class='glyphicon glyphicon-warning-sign'></i>Please Fill All Data <p>");
+  }
+})
+addliveimgupdate("rsudcteammodalfileuploader","rsudcteammodalthumbnail");
 });
