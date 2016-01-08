@@ -368,7 +368,7 @@ table{
 	width: 100%;
 }
 
-.faculty-delete-confirm .btn-danger,.faculty-delete-confirm .btn-primary,.rsudcteam-delete-confirm .btn-danger,.rsudcteam-delete-confirm .btn-primary,.rsudcdev-delete-confirm .btn-danger,.rsudcnav-delete-confirm .btn-primary{
+.faculty-delete-confirm .btn-danger,.faculty-delete-confirm .btn-primary,.rsudcteam-delete-confirm .btn-danger,.rsudcteam-delete-confirm .btn-primary,.rsudcdev-delete-confirm .btn-danger,.rsudcdev-delete-confirm .btn-primary{
 	float:right;
 	margin: 10px;
 }

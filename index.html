@@ -352,16 +352,7 @@
                   <div class="col-sm-6">
                     <input type="text" class="form-control" id='rsudcdevmodalname' placeholder="Name"/>
                     <br>
-                    <input type="text" class="form-control" id='rsudcdevmodaldesignation' placeholder="Designation"/>
-                    <br>
                     <textarea  maxlength="10000" class="form-control" id="rsudcdevmodaldescription" placeholder="Description"></textarea>
-                    <br>
-                    <div class="input-group">
-                      <div class="radio">
-                        <label class="radio-inline"><input type="radio" name="facutlytyperadio" data-value="core">Core Faculty</label>
-                        <label class="radio-inline"><input type="radio" name="facutlytyperadio" data-value="visiting">Visiting Faculty</label>
-                      </div>
-                    </div>
                     <br>
                     <input class="btn btn-primary" style="width:100%;text-align:left" id="rsudcdevmodalfileuploader" type="file"/>
                     <div id="rsudcdevmodalprogress">
@@ -422,7 +413,7 @@
             <div class="developmentcellGrid developmentcellGridDefault" onclick="$('#rsudcdevmodal').modal()">
               <i class="fa fa-plus-circle"></i>
             </div>
-            <div id="peoplegallery">
+            <div id="rsudcdevgallery">
 
             </div>
           </div>
@@ -450,13 +441,44 @@
     </div>
     <div id='alumni' class="playpage">
       <div class="container-fluid">
-      <div class="jumbotron">
-        <h1>Alumni</h1>
-        <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing
-          responsive, mobile-first projects on the web.</p>
+        <div id="alumnimodal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Team Member</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div id="alumnimodaluploader" class="beforeupload">
+                      <img class="modal-thumbnail" id="alumnimodalthumbnail" src="./def/people-placeholder.png" />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id='alumnimodalname' placeholder="Name"/>
+                    <br>
+                    <input type="text" class="form-control" id='alumnimodaldesignation' placeholder="Designation"/>
+                    <br>
+                    <textarea  maxlength="10000" class="form-control" id="alumnimodaldescription" placeholder="Description"></textarea>
+                    <br>
+                    <input class="btn btn-primary" style="width:100%;text-align:left" id="alumnimodalfileuploader" type="file"/>
+                    <div id="alumnimodalprogress">
+                    </div>
+                    <div id="alumnimodalwarnings"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="alumnimodalsubmit" class="btn btn-success">Save Changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
-  </div>
   <div id='studentgallery' class="playpage">
     <div id="studentgallerydeleteconfirm" class="modal fade" role="dialog">
       <div class="modal-dialog">
