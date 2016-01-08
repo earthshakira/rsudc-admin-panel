@@ -246,7 +246,7 @@ table{
 }
 
 
-.peopleGrid{
+.teamGrid,.developmentcellGrid,.peopleGrid{
 	position: relative;
 	width:20%;
 	height:200px;
@@ -260,7 +260,7 @@ table{
 	overflow: hidden;
 	}
 
-.peopleGrid  .wrapper{
+.peopleGrid  .wrapper,.developmentcellGrid  .wrapper,.teamGrid  .wrapper{
 	width:100%;
 	height: 100%;
 	position:absolute;
@@ -268,15 +268,15 @@ table{
 	opacity:0;
 	transition: all 0.3s ease-in;
 }
-.peopleGrid  .wrapper i{
+.peopleGrid  .wrapper i,.developmentcellGrid  .wrapper i,.teamGrid  .wrapper i{
 	color:white;
 	font-size: 10vh;
 	margin-top: 20%;
 }
-.peopleGrid:hover  .wrapper{
+.peopleGrid:hover  .wrapper,.developmentcellGrid:hover  .wrapper,.teamGrid:hover  .wrapper{
 	opacity:0.4;
 }
-.peopleGrid .titleslider{
+.peopleGrid .titleslider,.developmentcellGrid .titleslider,.teamGrid .titleslider{
 	width:100%;
 	position:absolute;
 	transition: all 0.3s linear;
@@ -284,7 +284,7 @@ table{
 	bottom:-50px;
 	border-left:5px solid #ffcc00;
 }
-.peopleGrid:hover .titleslider{
+.peopleGrid:hover .titleslider,.developmentcellGrid:hover .titleslider,.teamGrid:hover .titleslider{
 
 	bottom: 0px;
 }
@@ -308,6 +308,7 @@ table{
 	float:right;
 	margin:10px;
 }
+
 .image:hover .wrapper{
 	opacity:0.4;
 }
@@ -326,7 +327,7 @@ table{
 	position: absolute;
 	 color:green;
 }
-.peopleGridDefault{
+.peopleGridDefault,.developmentcellGridDefault,.teamGridDefault{
 	border: 5px dashed rgba(0,0,0,0.2);
 	cursor: pointer;
 	background-repeat: no-repeat;
@@ -334,13 +335,13 @@ table{
 	text-align: center;
 }
 
-.peopleGridDefault i{
+.peopleGridDefault i,.developmentcellGridDefault i,.teamGridDefault i{
 	font-size: 100px;
 	opacity: 0.2;
 	line-height: 200px;
 	transition:all 0.5s ease;
 }
-.peopleGridDefault:hover{
+.peopleGridDefault:hover,.developmentcellGridDefault:hover,.teamGridDefault:hover{
 	border: 5px dashed rgba(0,0,0,0.7);
 }
 #peopledisplayer .image{
@@ -355,10 +356,10 @@ table{
 #ntspeopledisplayer table{
 	width:100%;
 }
-.peopleGridDefault:hover i{
+.peopleGridDefault:hover i,.developmentcellGridDefault:hover i,.teamGridDefault:hover i{
 	opacity:1;
 }
-#facultyinfomodaluploader img{
+.modal-thumbnail{
 	width:100%;
 }
 

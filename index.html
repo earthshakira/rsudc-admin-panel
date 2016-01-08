@@ -299,27 +299,27 @@
       </div>
       <div id='rsudc' class="playpage">
       <div class="container-fluid">
-        <div id="rsudcmodal" class="modal fade" role="dialog">
+        <div id="rsudcteammodal" class="modal fade" role="dialog">
           <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Person Data</h4>
+                <h4 class="modal-title">Add Team Member</h4>
               </div>
               <div class="modal-body">
                 <div class="row">
                   <div class="col-sm-6">
-                    <div id="rsudcmodaluploader" class="beforeupload">
-                      <img class="modal-thumbnail" id="rsudcmodalthumbnail" src="./def/people-placeholder.png" />
+                    <div id="rsudcteammodaluploader" class="beforeupload">
+                      <img class="modal-thumbnail" id="rsudcteammodalthumbnail" src="./def/people-placeholder.png" />
                     </div>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" id='rsudcmodalname' placeholder="Name"/>
+                    <input type="text" class="form-control" id='rsudcteammodalname' placeholder="Name"/>
                     <br>
-                    <input type="text" class="form-control" id='rsudcmodaldesignation' placeholder="Designation"/>
+                    <input type="text" class="form-control" id='rsudcteammodaldesignation' placeholder="Designation"/>
                     <br>
-                    <textarea  maxlength="10000" class="form-control" id="rsudcmodaldescription" placeholder="Description"></textarea>
+                    <textarea  maxlength="10000" class="form-control" id="rsudcteammodaldescription" placeholder="Description"></textarea>
                     <br>
                     <div class="input-group">
                       <div class="radio">
@@ -328,15 +328,57 @@
                       </div>
                     </div>
                     <br>
-                    <input class="btn btn-primary" style="width:100%;text-align:left" id="rsudcmodalfileuploader" type="file"/>
-                    <div id="rsudcmodalprogress">
+                    <input class="btn btn-primary" style="width:100%;text-align:left" id="rsudcteammodalfileuploader" type="file"/>
+                    <div id="rsudcteammodalprogress">
                     </div>
-                    <div id="rsudcmodalwarnings"></div>
+                    <div id="rsudcteammodalwarnings"></div>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" id="rsudcmodalsubmit" class="btn btn-success">Save Changes</button>
+                <button type="button" id="rsudcteammodalsubmit" class="btn btn-success">Save Changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="rsudcdevmodal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Develoopment Cell Activity</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div id="rsudcdevmodaluploader" class="beforeupload">
+                      <img class="modal-thumbnail" id="rsudcdevmodalthumbnail" src="./def/picture-placeholder.png" />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id='rsudcdevmodalname' placeholder="Name"/>
+                    <br>
+                    <input type="text" class="form-control" id='rsudcdevmodaldesignation' placeholder="Designation"/>
+                    <br>
+                    <textarea  maxlength="10000" class="form-control" id="rsudcdevmodaldescription" placeholder="Description"></textarea>
+                    <br>
+                    <div class="input-group">
+                      <div class="radio">
+                        <label class="radio-inline"><input type="radio" name="facutlytyperadio" data-value="core">Core Faculty</label>
+                        <label class="radio-inline"><input type="radio" name="facutlytyperadio" data-value="visiting">Visiting Faculty</label>
+                      </div>
+                    </div>
+                    <br>
+                    <input class="btn btn-primary" style="width:100%;text-align:left" id="rsudcdevmodalfileuploader" type="file"/>
+                    <div id="rsudcdevmodalprogress">
+                    </div>
+                    <div id="rsudcdevmodalwarnings"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="rsudcdevmodalsubmit" class="btn btn-success">Save Changes</button>
               </div>
             </div>
           </div>
@@ -349,7 +391,7 @@
             <div class="col-sm-1 col-xs-2 info-box-minimise" data-visible="true"><i class="glyphicon glyphicon-minus"></i></div>
           </div>
           <div class='info-box-content'>
-            <div class="peopleGrid peopleGridDefault" onclick="$('#rsudcmodal').modal()">
+            <div class="teamGrid teamGridDefault" onclick="$('#rsudcteammodal').modal()">
               <i class="fa fa-plus-circle"></i>
             </div>
             <div id="peoplegallery">
@@ -365,26 +407,26 @@
             <div class="col-sm-1 col-xs-2 info-box-minimise" data-visible="true"><i class="glyphicon glyphicon-minus"></i></div>
           </div>
           <div class='info-box-content'>
-            <div id="peopledisplayer" class="container-fluid">
+            <div id="rsudcteamdisplayer" class="container-fluid">
               <div class="row">
                 <div class="col-sm-6 image"></div>
                 <div class="col-sm-6 info"></div>
               </div>
             </div>
-            <div id="newrsudcprogress">
+            <div id="newrsudcteamprogress">
             </div>
-            <div id="newrsudcwarnings"></div>
+            <div id="newrsudcteamwarnings"></div>
           </div>
         </div>
         <div class='info-box'>
           <div class='info-box-head row'>
             <div class="col-sm-11 col-xs-10">
-              <h4 class="info-box-title">People Dashboard</h4>
+              <h4 class="info-box-title">Develepment Cell Activities</h4>
             </div>
             <div class="col-sm-1 col-xs-2 info-box-minimise" data-visible="true"><i class="glyphicon glyphicon-minus"></i></div>
           </div>
           <div class='info-box-content'>
-            <div class="peopleGrid peopleGridDefault" onclick="$('#rsudcmodal').modal()">
+            <div class="developmentcellGrid developmentcellGridDefault" onclick="$('#rsudcdevmodal').modal()">
               <i class="fa fa-plus-circle"></i>
             </div>
             <div id="peoplegallery">
@@ -400,15 +442,15 @@
             <div class="col-sm-1 col-xs-2 info-box-minimise" data-visible="true"><i class="glyphicon glyphicon-minus"></i></div>
           </div>
           <div class='info-box-content'>
-            <div id="peopledisplayer" class="container-fluid">
+            <div id="rsudcdevdisplayer" class="container-fluid">
               <div class="row">
                 <div class="col-sm-6 image"></div>
                 <div class="col-sm-6 info"></div>
               </div>
             </div>
-            <div id="newrsudcprogress">
+            <div id="newrsudcdevprogress">
             </div>
-            <div id="newrsudcwarnings"></div>
+            <div id="newrsudcdevwarnings"></div>
           </div>
         </div>
       </div>
