@@ -4,6 +4,7 @@ var maxfilesize=524288000;
 var mbsize=maxfilesize/1024/1024;
 var uploaddebug=false;
 var loaderdisplay=0;
+var sliderBusy=0;
 $( document ).ajaxStart(function(){
   if(!loaderdisplay)$("#ajaxloader").css("display","block");
     loaderdisplay++;
@@ -1126,10 +1127,14 @@ function addliveimgupdate(uploader,img){  document.getElementById(uploader).onch
 //modalliveupdateclose
 
 function pageslider(div1,div2,wrapper,time){
+  if(sliderBusy){
+    return false;
+  }
   var d1=document.getElementById(div1);
   var d2=document.getElementById(div2);
   if(d1.offsetHeight<window.innerHeight)offsetTop=window.innerHeight;
   else offsetTop=d1.offsetHeight;
+      sliderBusy=1;
       $("#"+wrapper).css("overflow-y","hidden");
       d2.style.top=offsetTop+"px";
       $("#"+div2).css("display","block");
@@ -1139,12 +1144,14 @@ function pageslider(div1,div2,wrapper,time){
       $("#"+div2).animate({top:'20px'},time,function(){
         $("#"+div1).css("display","none");
         //$("#"+wrapper).css("overflow-y","auto");
+        sliderBusy=0;
       });
+      return true;
 }
 
 
 $(document).ready(function(){
-  var active="alumni";
+  var active="home";
   $("#"+active).slideDown();
   viewCarouselActive();
   viewGallery();
@@ -1199,8 +1206,12 @@ $(document).ready(function(){
     $("#playground").scrollTop(0);
     var next=$(this).attr("data-value");
       if(active==next)return;
-      pageslider(active,next,"playground",1000);
-      active=next;
+      if(pageslider(active,next,"playground",1000));
+      {
+        active=next;
+        $(".sidebar-btn").removeClass("sidebar-active");
+        $(this).addClass("sidebar-active");
+      }
       if(active=="frontpagecarousel"){
         var dropzone=document.getElementById('playground');
         dropzone.ondrop=function(e){

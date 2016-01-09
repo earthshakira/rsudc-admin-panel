@@ -14,17 +14,24 @@ function create_thumbnail($path,$save,$width,$height)
     return false;
   }
 
-  $thumb =imagecreatetruecolor( $width,$height);
+  if($width==0&&$height==0){
+    return imagepng($src,$save);
+  }
   $src_aspect = $size[0]/$size[1];
+  if($width==0){
+    $width=$height*$src_aspect;
+  }
+  if($height==0){
+    $height=$width/$src_aspect;
+  }
+  $thumb =imagecreatetruecolor( $width,$height);
   $thumb_aspect = $width / $height;
 
   if($src_aspect<$thumb_aspect){
-    echo "narowwer";
     $scale=$width/$size[0];
     $new_size=array($width,$width/$src_aspect);
     $src_pos=array(0,($size[1]*$scale - $height)/$scale/2);
   }else if($src_aspect>$thumb_aspect){
-    echo "wider";
     $scale=$height/$size[1];
     $new_size=array($height*$src_aspect,$height);
     $src_pos=array(($size[0]*$scale - $width)/$scale/2,0);
@@ -44,6 +51,4 @@ function create_thumbnail($path,$save,$width,$height)
 
 }
 
-
-create_thumbnail("./image.jpg","yolo.png",2500,2500);
  ?>

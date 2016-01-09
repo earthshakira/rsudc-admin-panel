@@ -1,5 +1,6 @@
 <?php
 require_once("connection.php");
+require("functions.php");
 $fileName = $_FILES["file"]["name"]; // The file name
 $fileTmpLoc = $_FILES["file"]["tmp_name"]; // File in the PHP tmp folder
 $fileType = $_FILES["file"]["type"]; // The type of file it is
@@ -24,7 +25,8 @@ function generateRandomString($length = 10) {
 }
 
 $ext = end((explode(".", $fileName)));
-$image=$path.generateRandomString(50).".".$ext;
+$filename=generateRandomString(50);
+$image=$path.$filename.".png";
 if(isset($_POST["title"])&&isset($_POST["caption"]))
 $sql = "INSERT INTO  frontcarouselgallery(image,title,caption) VALUES ('".$image."','".$_POST["title"]."',' ".$_POST["caption"]."')";
 else if(isset($_POST["title"])){
@@ -41,12 +43,20 @@ if ($conn->query($sql) === TRUE) {
     $response['staus']=false;
     die(json_encode($response));
 }
-if(move_uploaded_file($fileTmpLoc,$image)){
+$scratchpath="../images/scratch/".$filename.".".$ext;
+if(move_uploaded_file($fileTmpLoc,$scratchpath)){
     $response['message']="$fileName upload is complete";
 } else {
   $response['message']="move_uploaded_file function failed";
   $response['staus']=false;
 }
+
+create_thumbnail($scratchpath,$image,180,180);
+create_thumbnail($scratchpath,"../images/full/".$filename.".png",0,0);
+create_thumbnail($scratchpath,"../images/medium/".$filename.".png",450,0);
+create_thumbnail($scratchpath,"../images/thumb/".$filename.".png",180,180);
+
+unlink($scratchpath);
 echo json_encode($response);
 
 ?>

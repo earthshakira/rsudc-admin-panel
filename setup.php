@@ -168,5 +168,6 @@ foreach ($sql as $sq) {
   mkdir("../images/thumb");
   mkdir("../images/medium");
   mkdir("../images/full");
+  mkdir("../images/scratch");
 
  ?>
