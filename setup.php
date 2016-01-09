@@ -19,6 +19,11 @@ $sql=array("
      year  varchar(25) NOT NULL
   ) ENGINE=\"InnoDB\" AUTO_INCREMENT=8 DEFAULT CHARSET=\"utf8\";","
 
+ CREATE TABLE IF NOT EXISTS login(
+     name varchar(1500) NOT NULL,
+     pass varchar(250) NOT NULL
+  ) ENGINE=\"InnoDB\" AUTO_INCREMENT=8 DEFAULT CHARSET=\"utf8\";","
+
   CREATE TABLE IF NOT EXISTS  facultyinfo  (
      id int(11) NOT NULL,
      image varchar(1500) NOT NULL,
