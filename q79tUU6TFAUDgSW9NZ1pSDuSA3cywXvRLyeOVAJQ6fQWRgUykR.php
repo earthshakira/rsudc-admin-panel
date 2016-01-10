@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if(!isset($_SESSION["user"]))
 {
@@ -105,13 +105,15 @@ header( "Location:./login-f.html" );
           <div class="col-sm-1 col-xs-2 info-box-minimise" data-visible="true"><i class="glyphicon glyphicon-minus"></i></div>
         </div>
         <div class="info-box-content">
-          <input type="text" class="form-control" id='newimagetitle' placeholder="Title (Optional)"/>
-          <br>
-          <textarea class="form-control" id="newimagecaption" placeholder="Caption (Optional)"></textarea>
-          <input class="btn btn-primary" type="file" id="newimage" multiple/>
-          <input type="submit" id="frontcarouselimgupload" class='btn btn-primary' value="Upload" />
-          <div id="upload-meta">
-            <div id="upload-warnings"></div>
+          <div class="container-fluid">
+            <input type="text" class="form-control" id='newimagetitle' placeholder="Title (Optional)"/>
+            <br>
+            <textarea class="form-control" id="newimagecaption" placeholder="Caption (Optional)"></textarea>
+            <input class="btn btn-primary" type="file" id="newimage" multiple/>
+            <input type="submit" id="frontcarouselimgupload" class='btn btn-primary' value="Upload" />
+            <div id="upload-meta">
+              <div id="upload-warnings"></div>
+            </div>
           </div>
         </div>
       </div>

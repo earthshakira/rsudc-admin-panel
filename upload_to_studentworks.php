@@ -24,7 +24,7 @@ function generateRandomString($length = 10) {
 }
 
 $ext = end((explode(".", $fileName)));
-$image=$path.generateRandomString(50).".".$ext;
+$image=$path.generateRandomString(150).".".$ext;
 $sql = "INSERT INTO  studentswork(file,title,year,sem) VALUES ('".$image."','".$_POST["title"]."',' ".$_POST["year"]."','".$_POST["sem"]."')";
 if ($conn->query($sql) === TRUE) {
     $response['message']="sqldone";

@@ -7,7 +7,9 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         $image=$row["Image"];
-        $removed=(unlink($image));
+
+        if(file_exists($image))
+      {  $removed=(unlink($image));
         if(!$removed){
           $res["status"]=false;
           $res["message"]="Delete Unsucessful";
@@ -21,7 +23,7 @@ if ($result->num_rows > 0) {
             $res["message"]=$conn->error;
           }
           die();
-        }
+        }}
     }
 } else {
   $res["status"]=false;

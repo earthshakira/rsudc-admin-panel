@@ -1205,13 +1205,11 @@ $(document).ready(function(){
   $(".sidebar-btn").click(function(){
     $("#playground").scrollTop(0);
     var next=$(this).attr("data-value");
-      if(active==next)return;
-      if(pageslider(active,next,"playground",1000));
-      {
+      if(active==next||sliderBusy)return;
+        pageslider(active,next,"playground",1000)
         active=next;
         $(".sidebar-btn").removeClass("sidebar-active");
         $(this).addClass("sidebar-active");
-      }
       if(active=="frontpagecarousel"){
         var dropzone=document.getElementById('playground');
         dropzone.ondrop=function(e){

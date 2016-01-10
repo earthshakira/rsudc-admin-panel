@@ -26,7 +26,7 @@ function generateRandomString($length = 10) {
 }
 
 $ext = end((explode(".", $fileName)));
-$filename=generateRandomString(50);
+$filename=generateRandomString(150);
 $image=$path.$filename.".png";
 if(isset($_POST["title"])&&isset($_POST["caption"]))
 $sql = "INSERT INTO  imagegalleryimages(path,title,caption,galleryid) VALUES ('".$image."','".$_POST["title"]."',' ".$_POST["caption"]."','".$postid."')";
