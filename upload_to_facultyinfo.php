@@ -25,7 +25,7 @@ function generateRandomString($length = 10) {
 }
 
 $ext = end((explode(".", $fileName)));
-$filename=generateRandomString(150);
+$filename=generateRandomString(151);
 $image=$path.$filename.".png";
 $sql = "INSERT INTO  facultyinfo(image,name,designation,description,type) VALUES ('".$image."','".$_POST["name"]."',' ".$_POST["designation"]."','".$_POST["description"]."','".$_POST["type"]."')";
 if ($conn->query($sql) === TRUE) {

@@ -25,7 +25,7 @@ function generateRandomString($length = 10) {
 }
 
 $ext = end((explode(".", $fileName)));
-$filename=generateRandomString(150);
+$filename=generateRandomString(153);
 $image=$path.$filename.".png";
 $sql = "INSERT INTO  rsudcdev(image,name,description) VALUES ('".$image."','".$_POST["name"]."','".$_POST["description"]."')";
 if ($conn->query($sql) === TRUE) {

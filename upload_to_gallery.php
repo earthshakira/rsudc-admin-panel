@@ -25,7 +25,7 @@ function generateRandomString($length = 10) {
 }
 
 $ext = end((explode(".", $fileName)));
-$filename=generateRandomString(150);
+$filename=generateRandomString(152);
 $image=$path.$filename.".png";
 if(isset($_POST["title"])&&isset($_POST["caption"]))
 $sql = "INSERT INTO  frontcarouselgallery(image,title,caption) VALUES ('".$image."','".$_POST["title"]."',' ".$_POST["caption"]."')";
