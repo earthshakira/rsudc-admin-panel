@@ -423,23 +423,6 @@ $("#ntsfacultyinfo").keyup(function(e){
       }
   });
 
-  $("#ntsfacultyinfo").keyup(function(e){
-      var code = e.which; // recommended to use e.which, it's normalized across browsers
-      if(code==13){
-        e.preventDefault();
-        if($("#ntsfacultyinfo").val()){
-          var x=urlfriendly($("#ntsfacultyinfo").val());
-          $.getJSON("./addntsfaculty.php?name="+x,function(data){
-            if(data.status)
-            {
-              viewntsPeople();
-              $("#ntsfacultyinfo").val("");
-            }
-          });
-        }
-      }
-  });
-
 function viewStudentGalleryImages(x){
   if(x){
     $.getJSON("./getstudentgalleryimages.php?id="+x.substring(15),function(data){
